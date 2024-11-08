@@ -1,0 +1,1307 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+
+
+% Times yapmak icin bunu kullan.
+%usepackage{times}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+\providecommand\Python{\textsc{Python}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Dr. Mahmut Pekedis}
+
+ \section{Contact Information}
+
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+
+% Address box
+\parbox{\textwidth-\rcollength-\spacewidth}{%
+%Assistant Professor\\
+\href{http://www.ege.edu.tr/}{Ege University}\\
+\href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of Mechanical Engineering}\\
+35040, Bornova,\\Izmir, Turkey \\}
+
+&
+% Uncomment to add a vertical bar in middle of contact information
+%{\vrule width 0.5pt}
+\parbox[m][5\baselineskip]{\spacewidth}{} &
+
+% Non-snail-mail contact information
+\parbox{\rcollength}{%
+\textit{Work:}   ~~+90-232-311-5122 \\
+\email{mahmut.pekedis@ege.edu.tr}\\
+}
+%\textit{WWW:} \href{http://www.tedpavlic.com/}{www.tedpavlic.com}
+
+\\
+
+\end{tabular}
+
+%%
+%% In modern CV's, it seems like ``Objective'' is frowned upon. Instead,
+%% incorporate it into a well-constructed cover letter. The ``More
+%% information'' can go at the end of the CV, but it should not distract
+%% from the section giving references available to contact.
+%%
+%
+% \section{Objective}
+%
+% Placement in an academic position (i.e., faculty, postdoctoral, or
+% research scientist) that allows for advanced research in distributed
+% complex adaptive systems (i.e., modeling, analysis, design, and
+% verification) with a particular focus on the control of engineered
+% agents (e.g., for communications, control, software, electronics, and
+% sustainability) and the analysis of biological phenomena (e.g.,
+% self-organization, ecological rationality)
+% \begin{innerlist}
+% \item More information and auxiliary documents can be found at\\\url{http://www.tedpavlic.com/facjobsearch/}
+% \end{innerlist}
+
+\section{Research Interests}
+
+\textbf{Structural mechanics:} structural health monitoring, biomechanics, numerical methods, the finite element analysis, meshless methods, damage detection, mechanics of composite materials, impact-crash analysis, in-silico modelling, elasticity theory, constitutive modelling, uncertainity quantification, validation and verification, clinical--experimental and numerical biomechanics, human-machine haptics interface, pattern recognation, machine learning, cyber physical systems, autonomous systems, robotics
+
+
+\section{Current Academic Appointments}
+
+\textbf{Associate Professor},
+            \href{http://www.ege.edu.tr/}{Ege University}
+            \hfill {August 2022 to present}
+\begin{innerlist}
+
+    \item[] \href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of
+    Mechanical Engineering}~(80\%)
+        
+    \item[] \href{https://egeplm.ege.edu.tr/eng-/Homepage.html}{Product 
+    Lifecycle Management Research and Application Excellence Center}~(10\%)
+        
+    \item[] \href{https://ebp.ege.edu.tr/DereceProgramlari/Detay/2/61130/8230/932001?lang=en-US}{
+    Mechatronics Engineering}~(10\%)
+
+\end{innerlist}
+
+\section{Previous Academic Appointments}
+
+\textbf{Assistant Professor},
+            \href{http://www.ege.edu.tr}{Ege University}
+            \hfill {April 2015 to August 2021}
+\begin{innerlist}
+    \item[] \href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of
+    Mechanical Engineering}
+\end{innerlist}
+
+
+\halfblankline
+
+\textbf{PhD Research Scholar},
+            \href{https://www.lanl.gov}{Los Alamos National Laboratory}
+            \hfill {June 2012 to August 2013}
+\begin{innerlist}
+
+    \item[] \href{https://www.lanl.gov/projects/national-security-education-center/engineering/}{Engineering
+    Institute}
+    \begin{innerlist}
+        \item Supervisor: Dr. Charles Farrar and Dr. David Mascarenas
+        \item A vibro-haptics human-machine interface for structural health monitoring
+    \end{innerlist}
+\end{innerlist}
+
+
+
+\textbf{Research/Teaching Assistant},
+            \href{http://www.ege.edu.tr/}{Ege University}
+            \hfill {September 2009 to June 2012}
+  \begin{innerlist}
+    
+        \item[] \href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of
+    Mechanical Engineering}    
+    \begin{innerlist}
+
+        \item Supervisor: \href{https://unisis.ege.edu.tr/researcher=hasan.yildiz}{Professor Hasan Yildiz}
+        \item Structural health monitoring for composite structures
+     \end{innerlist}
+  \end{innerlist}
+
+
+
+
+\section{Education}
+
+
+\begin{innerlist}
+
+\item[] Ph.D.,
+        \href{https://me.ege.edu.tr/eng-/Homepage.html}
+             {Mechanical Engineering},
+             \href{https://www.ege.edu.tr}{Ege University}, September 2014
+        \begin{innerlist}
+        \item Thesis Topic: \emph{Structural Health Monitoring and 
+        Maintanence System for Composite Materials}
+        \item Adviser:
+              \href{https://unisis.ege.edu.tr/researcher=hasan.yildiz}
+                   {Professor Hasan Yildiz}
+        \item Area of Study: Mechanical Engineering
+        \end{innerlist}
+
+\item[] M.S.,
+        \href{https://me.ege.edu.tr/eng-/Homepage.html}
+             {Mechanical Engineering},
+             \href{https://www.ege.edu.tr}{Ege University}, August 2008
+        \begin{innerlist}
+        \item Thesis Topic: \emph{Structural Analysis with Meshfree Methods}
+        \item Adviser:
+              \href{https://unisis.ege.edu.tr/researcher=hasan.yildiz}
+                   {Associate Professor Hasan Yildiz}
+        \item Area of Study: Mechanical Engineering
+        \end{innerlist}
+
+\item[] B.S.,
+        \href{https://www.gazi.edu.tr/}
+             {Mechanical Engineering}, 
+             \href{https://www.gazi.edu.tr}{Gazi University}, January 2006
+\end{innerlist}
+
+% \section{Submitted Journal Publications}
+%
+% % Add a little space to nudge next ``Ref'd Journal Publications'' marginpar
+% % down to make room for tall ``Submitted Journal Publications''
+% % marginpar. If there are enough submitted journal publications, this
+% % space will not be needed (and should be removed).
+% \vspace{0.1in}
+
+\section{Refereed Journal Publications}
+
+\begin{bibenum}
+
+	\item	Ercan, E., Avcı, M.S.,Pekedis, M., Hızal, Ç. Damage classification of a three-story 
+		aluminum building model by convolutional neural networks and the effect of scarce 		
+		accelerometers.
+		\emph{Appl. Sci.}, 14:2568, 2024.
+		\doi{10.3390/app14062628}
+
+
+	\item	Pekedis M., Ozan F., Koyuncu S., Yildiz H. The finite element method-based pattern recognition approach for
+		the classification of patient-specific gunshot injury.
+		\emph{Proceedings of the Institution of Mechanical Engineers, Part H: Journal of Engineering in Medicine},
+		236(5):665--675, 2022.
+		\doi{10.1177/09544119221086397}
+		
+	\item Pekedis M., Altan M., Akgul T., Yildiz H. The influence of accessory rods and connectors on the quasi-static 
+		and dynamic response of spine fixation.\\ 
+		\emph{Experimental Techniques}, 2022.
+		\doi{10.1007/S40799-022-00569-2} 
+	
+	\item Özden M.A., Acar E., Yildiz H., Güner M., Pekedis M.  A vibro-haptics smart corset trainer for non-ideal 
+		sitting posture.
+		\emph{Textile and Apparel}, 32(4), 304 - 313, 2022.
+		\doi{10.32710/tekstilvekonfeksiyon.994444}
+
+	\item Pekedis M., Ozan F., Yildiz H. Biomechanics of the femoral head cartilage and subchondral 
+		trabecular bone in osteoporotic and osteopenic fractures. 
+		\emph{Annals of Biomedical Engineering}, 49(12), 3388-3400, 2021. 
+		\doi{10.1007/s10439-021-02861-5}
+		
+	\item Pekedis M. Detection of multiple bolt loosening via data based statistical pattern recognition techniques.
+		\emph{Journal of the Faculty of Engineering and Architecture of Gazi University}, 36(4), 1993-2010, 2021.
+		\doi{10.17341/gazimmfd.820157}
+		
+	\item Budak I.N., Pekedis M. Experimental and numerical fatigue behaviour analysis of a plastically deformed 
+		automobile tie rod.
+		\emph{Dokuz Eylul University Engineering Faculty Journal of Science and Engineering}, 23(68), 647-659, 2021.\\
+		\doi{10.21205/deufmd.2021236826}  
+
+	\item Pekedis M., Yoruk M.D., Binboga E., Yildiz H., Bilge O., Çelik S. Characterization of the mechanical properties
+		of human parietal bones preserved in modified larssen solution, formalin and as fresh frozen. 
+		\emph{Surgical and Radiologic Anatomy}, 43(12), 1933-1943, 2021.
+		\doi{10.1007/s00276-021-02762-1}
+		
+	\item Kabacaoglu S., Pekedis M., Yildiz H., Theoretical and experimental improvement of the effect of the diaphragm
+		 springs form used in the clutch system on the fatigue strength and mechanical characteristics. 
+		\emph{Uludag University Journal of the Faculty of Engineering}, 26(3), 1121--1138, 2021.
+		\doi{10.17482/uumfd.939663} 		
+		
+	\item Ayran E., Pekedis M. Validation of experimental impact tests on aluminum alloy car wheels using the 
+		finite element method. 
+		\emph{DUJE}, 11(2), 663--670, 2020.\\ 
+	 	\doi{10.24012/dumf.651318}
+	 	 
+	\item Pekedis M. Damage diagnosis of bolt loosening via vector autoregressive - support vector machines.i
+		\emph{Hittite Journal of Science & Engineering}, 7(3), 169--179, 2020.
+		\\\doi{10.17350/HJSE19030000186} 
+
+	\item Ozan F., Pekedis M., Koyuncu S., Altay T., Yildiz H., Kayali C. Micro-computed tomography and mechanical
+		evaluation of trabecular bone structure in osteopenic and osteoporotic fractures. 
+		\emph{Journal of Orthopaedic Surgery}, 25(1), 1--6, 2017.
+		\doi{10.1177/2309499017692718}
+		
+	\item Pekedis M., Yildiz H. Damage diagnosis of a laminated composite beam and plate via model based structural 
+		health monitoring techniques. 
+		\emph{Journal of the Faculty of Engineering and Architecture of Gazi University}, 31(4), 813--831, 2016.\\
+		\href{https://dergipark.org.tr/en/download/article-file/259809} {link}
+	
+	\item Akdemir Ovunc, C Lineaweaver W., Cavusoglu T., Binboğa E., Uyanikgil Y., Zhang F., Pekedis M., Yagci T. Effect of taurine on rat Achilles tendon healing.
+		 \emph{Connective Tissue Research}, 56(4), 300--306, 2015.\\ 
+		 \doi{10.3109/03008207.2015.1026437}
+		 
+	\item Pekedis M., Masceranas D., Turan G., Ercan E., Farrar C.R, Yildiz H. Structural health monitoring for bolt
+		 loosening via a non invasive vibro haptics human machine cooperative interface. 
+		 \emph{Smart Materials and Structures}, 24(8), 85018, 2015.
+		 \doi{10.1088/0964-1726/24/8/085018}
+		 
+	\item Pekedi̇s M., Yildiz H. Numerical analysis of a projectile penetration
+		into the human head via meshless method.
+		\emph{Journal of Mechanics in Medicine and Biology}, 14(04), 1450059, 2014.
+		\doi{10.1142/S0219519414500596}
+		
+	\item Ozan F., Koyuncu S., Pekedis M., Altay T., Yildiz H., Toker G. Greater trochanteric
+		fixation using a cable syste for partial hip arthroplasty: 
+		A clinical and finite element analysis. 
+		\emph{BioMed Research International}, 1--7, 2014.\\
+		\doi{10.1155/2014/931537}
+		
+	\item Olmez S., Dogan S., Pekedis M., Yildiz H. Biomechanical evaluation of sagittal maxillary internal distraction osteogenesis
+		 in unilateral cleft lip and palate patient and noncleft patients: A three-dimensional finite element analysis.
+		 \emph{The Angle Orthodontist}, 84(5), 815--824, 2014.
+		 \doi{10.2319/080613-586.1}
+		 
+	\item Atesci Y.Z., Aydogdu O., Karakose A., Pekedis M., Karal O., Senturk U., Cinar M. Does urinary bladder shape 
+		affecturinary flow rate in men with lower urinary tract symptoms?. 
+		\emph{The Scientific World Journal}, 1--5, 2014.\\
+		\doi{10.1155/2014/846856} 
+	
+	\item Kuran F.D., Pekedis M., Yildiz H. ,Aydin F., Eliyatkin N. 	Effect of hyperbaric oxygen treatment on
+		tendon healing after Achilles tendon repair: an experimental study on rats. 
+		\emph{Acta Orthopaedica et Traumatologica Turcica}, 46(4), 293--300, 2012.
+		\doi{10.3944/AOTT.2012.2653}
+		
+	\item Pekedis M., Yildiz H. Comparison of fatigue behaviour of eight different hip stems: a numerical and experimental study. 
+		\emph{Journal of Biomedical Science and Engineering}, 4(10), 643--650, 2011.
+		\doi{10.4236/jbise.2011.410080} 
+
+	\item Atesci Y.Z, Senturk U., Pekedis M., Cinar M. Non-invasive urodynamic analysis using the computational fluid dynamics 
+		method based on MR Images. 
+		\emph{Turkiye Klinikleri Journal of Medical Sciences}, 31(5), 1186--1193, 2011.\\
+		\doi{10.5336/medsci.2010-21420}
+	
+	\item Yegengil C., Pekeds M., Yildiz H. Fracture healing in a denervation and or nerve ending interpositioning model in the rat.
+		 \emph{International Journal of Clinical Medicine}, 2(3), 301--306, 2011.
+		 \doi{10.4236/ijcm.2011.23051}
+
+	\item Pekedis M., Yildiz H. Meshfree Methods and Their Classification. 
+		\emph{Pamukkale University Journal of Engineering Sciences}, 2010, 16(1), 1--9.
+	
+	\item Ozan F., Yildiz H., Bora O.A, Pekedis M., Ay Coskun G., Gore O. The Effect Of Head Trauma On Fracture Healing: Biomechanical
+	 	Testing And Finite Element Analysis. 
+	 	\emph{Acta Orthopaedica Et Traumatologica Turcica}, 44(4), 313-321, 2010.\\
+	 	\Doi{10.3944/Aott.2010.2277}
+	 	
+	 \item Pekedis M., Yildiz H. Modelling of axially loaded cantilever rod using element free Galerkin method. 
+	 	\emph{Pamukkale University Journal of Engineering Sciences}, 15(3), 353--361, 2009.
+	 
+	 \item Pekedis M., Yildiz H. Solution of 2D cantilever beam by using the element free Galerkin method with the 
+	 	finite element method. 
+	 	\emph{Sigma Journal of Engineering and Natural Sciences}, 27(1), 26--38, 2009. 
+	
+	
+\end{bibenum}
+
+% Add a little space to nudge next ``Conference Publications'' marginpar
+% down to make room for tall ``Submitted Conference Publications''
+% marginpar. If there are enough submitted journal publications, this
+% space will not be needed (and should be removed).
+\vspace{0.1in}
+
+\section{Refereed Conference Publications}
+
+\begin{bibenum}
+
+	\item Avci M.S., Ercan E., Nuhoğlu A., Arisoy B., Hizal Ç., Pekedis M. Evaluating Damage 		Detection Performance in Reinforced Concrete Columns Using Synthetic Data and Machine 			Learning
+	\emph{5th International Engineering Research Symposium}, March 7-92024, Duzce, Turkey.
+		
+
+	\item Avci M.S.*, Ercan E., Nuhoğlu A., Arisoy B., Hizal Ç., Pekedis M., Structural Damage 		Detection on Fire-Exposed Reinforced Concrete Columns Using Deep Learning: A Study with 		Acceleration Data
+	\emph{5th International Engineering Research Symposium}, March 7-92024, Duzce, Turkey.
+
+
+	\item Pekedis M. Uncertainity quantification of hyperelastic soft tissue.  
+		\emph{26th Congress of the European Society of Biomechanics}, pp.~612, July 11--14, 2021. Milan, Italy.
+
+	\item Pekedis M. Using Bayesian framework to calibrate Voce model parameters of ductile human parietal bone. 
+		\emph{Biomechanics 2020}, pp.~119-120, September 9--10, 2021. Warsaw, Poland.
+
+	\item Pekedis M. Biomechanical comparison of the osteoporotic and osteopenic trabecular bone specimens using 
+		modal analysis, 2021.
+		\emph{2nd International Congress on Engineering Sciences and Multidisciplinary Approaches}, pp.~325, 
+		September 18, 2021. Istanbul, Turkey.
+	
+	\item Yörük M.D., Pekedis M., Binboğa E., Çelik S., Bilge O. A comparison of biomechanical features modified Larssen 
+		fixed, 10\% formalin fixed and fresh frozen cadavers.
+		\emph{National Anatomy Congress & 1st International Mediterranean Anatomy Congress}, 12(2),
+		September 6--9, 2018. Konya, Turkey.
+
+		
+	\item Pekedis M., Ozan F., Koyuncu Ş., Yildiz H., Application of the numerical method with machine learning algorithm 
+		for a 3D specific firearm injury forensic model. 
+		\emph{23rd Congress of the European Society of Biomechanics}, July 2--5, 2017. Seville, Spain. 
+		
+	\item Pekedis M., Masceranas D., Turan G., Ceylan H., Ercan E., Farrar C.R, Yildiz H. Structural health monitoring via 
+		human-machine Interface. \emph{Sixth World Conference on Structural Control and Monitoring},
+		pp.~167--171, July 15--17, 2014. Barcelona, Spain.
+
+	\item Ercan E., Pekedis M., Turan G., Ceylan H. Structural health monitoring with audio presentations 
+		\emph{Sixth World Conference on Structural Control and Monitoring}, pp.~2643--2649, July 15--17, 2014. Barcelona, Spain.
+
+	\item Ceylan H., Turan G., Ercan E., Pekedis M.	Structural damage detection by using a single 
+		excitation record.	\emph{Sixth World Conference on Structural Control and Monitoring},
+		pp.~2567--2574, July 15--17, 2014. Barcelona, Spain.
+		
+	\item Mascarenas D.D.L., Choi YS., Kim H.C, Pekedis M., Hong S.C, Lee J.R, Farrar C.R. Development of 
+		a novel human-machine interface exploiting sensor substitution for structural health monitoring. 
+		\emph{2013 IEEE RO-MAN: The 22nd IEEE International Symposium on Robot and Human Interactive Communication}, 
+		August 26--29, 2013. Gyeongju, South Korea.  
+		\doi{10.1109/ROMAN.2013.6628482}. 
+			
+	\item Pekedis M., Yildiz H. Simulation of a projectile penetration to human head via meshless method.
+		\emph{The 11th International Symposium on Computer Methods in Biomechanics and Biomedical Engineering}, 
+		April 3--4, 2013. Salt Lake City, Utah, USA. 
+		
+	\item Mascarenas D., Choi Y.S, Kim H.C, Pekedis M., Yildiz H., Plont C., Brown C, Cowell M, Park G, Hahn H, 
+		Lee Jung-Ryul, Farrar C.R. A vibro-haptic human-machine interface for structural health monitoring. 
+		\emph{9th International Workshop on Structural Health Monitoring (IWSHM)}, 2, pp.~1171-1178, September 10--12, 2013.
+		San Francisco, CA, USA.
+	
+	\item Pekedis M., Yildiz H. Non-destructive damage detection of laminated composite beams based on dynamic analysis techniques.
+		\emph{9th International Fracture Conference}, pp.~114--124, September 19--21, 2011. Istanbul, Turkey.
+		
+	\item Pekedis M., Yildiz H., Comparison of dynamic fatigue behavior of eight different implanted hip prostheses during gait.
+		\emph{9th International Fracture Conference}, pp.~397--407, September 19--21, 2011. Istanbul, Turkey. 
+
+	\item Pekedis M., Ozan F., Yildiz H. Developing of a three-dimensional foot ankle model based on CT images and non-linear 
+		analysis of anterior drawer test by using the finite element method. 
+		\emph{Fifth International Participated National Biomechanics Congress}, 44(1), pp.~14, September 23--25, 2010. Izmir, Turkey. 
+		\\ \doi{10.1016/j.jbiomech.2011.02.054}
+		
+	\item Duran D., Kaya E., Pekedis M., Şentürk U., Erkek M., Yildiz H. Applications of numerical methods in biomechanics. 
+		\emph{Fifth International Participated National Biomechanics Congress}, 44(1), pp.~14-15, September 23--25, 2010. Izmir, Turkey.
+		\doi{10.1016/j.jbiomech.2011.02.055}
+
+
+\end{bibenum}
+
+\vspace{0.1in}
+
+\section{Conference Posters}
+
+\begin{bibenum}
+
+	\item Güner M., Yildiz H., Pekedis M., Acar E., Şekeroğlu S., Özden M.A.
+		Improving a smart corset for posture defects.
+		\emph{Mas International Conference on Mathematics, Engineering, Natural & Medical Science-VI}, pp.~69, 
+		July 12-14, 2019. Kiev, Ukraine. 
+
+	\item Pekedis M., Ölmez S., Doğan S., Yildiz H. Patient-specific 3D surgical simulation of
+		distraction osteogenesis and lefort I osteotomy using the finite element method.
+		\emph{The 11th International Symposium on Computer Methods in Biomechanics and 
+		Biomedical Engineering}, April 3--4, 2013. Salt Lake City, Utah, USA.2013.
+		
+	\item Ölmez S., Doğan S., Pekedis M., Yildiz H. The evaluation of maxillary advancement technique
+		using internal distraction osteogenesis in unilateral cleft lip and palate patient with 
+		finite element analysis.
+		\emph{Fifth International Participated National Biomechanics Congress}, 44(1), 13-14, 
+		September 23--25, 2010. Izmir, Turkey.
+		\doi{10.1016/j.jbiomech.2011.02.053}
+		
+	\item Pekedis M., Yildiz H. Finite element analysis of the anterior drawer test for foot ankle.
+		\emph{European Biotechnology Congress 2011}, 22(1), 150-151, September 28--October 1, 2011. Istanbul, Turkey.
+		\emph{10.1016/j.copbio.2011.05.502},
+		
+	\item Ölmez S., Doğan S., Pekedis M., Yildiz H. Biomechanical analysis of sagittal maxillary advancement
+		using internal maxillary distractors.
+		\emph{87th Congress of the European Orthodontıc socıety}, June 19--23, 2011. Istanbul, Turkey.
+		
+		
+	\item Ölmez S., Doğan S., Pekedis M., Yildiz H. Biomechanical effects of maxillary advancement on 
+		the craniofacial skeleton with unilateral cleft lip and p	alate,
+		using internal maxillary distractors.
+		\emph{9 th European Craniofacial Congress}, September 14--17, 2011. Salzburg, Istanbul, Austria.		
+		
+	\item Pekedis M., Ozan F., Dinç M.H., Yildiz H. Investigation of the effects of allogeneic mesenchymal
+		stem cells on bone union and regeneration in the necrosed bone by biomechanical test and the finite
+		element method.
+		\emph{Fifth International Participated National Biomechanics Congress}, 44(1), 15, September 23--25, 2010.
+		Izmir, Turkey.
+		\doi{10.1016/j.jbiomech.2011.02.056}
+
+
+\end{bibenum}
+
+\vspace{0.1in}
+\section{Book Chapters}
+
+\begin{bibenum}
+
+
+	\item Ozdan MA., Pekedis M. Handbook of Aviation Technology and its Applications.
+	In: C.~Harmansah, H.T.~Hava, 
+	\emph{Real-time structural health monitoring using ultrasonic wave scatterers}. pp.~163--172, 2022.
+	
+
+\end{bibenum}
+\vspace{0.1in}
+\section{Other Publications}
+
+\begin{bibenum}
+
+    \item Pekedis M. \emph{Structural Health Monitoring and 
+        Maintanence System for Composite Materials}. 
+        PhD thesis, Ege University,
+        Bornova, Izmir, Turkey, 2014.
+
+    \item Pekedis M. \emph{Structural Analysis with Meshfree Methods}.
+        Master's thesis, Ege University,
+        Bornova, Izmir, Turkey, 2008
+\end{bibenum}
+\vspace{0.1in}
+\section{Grants}
+\restartlist{bibenum}
+
+%\textbf{Awaiting Decision}
+%
+%\begin{bibenum}
+%    \item Senior staff, ``A new multi-objective optimization framework
+%        for investigating mechanisms of social resource allocation'',
+%        NIH, NIGMS, 2015. Revision in progress.
+%
+%\end{bibenum}
+%
+%\blankline
+
+
+\begin{bibenum}
+
+
+
+	\item Pekedis M., Ozan F., Unlu ÖC ,Development of a graphical user interface based on 	
+		coupled in vitro measurements and in silico modeling for the elastic-plastic biomechanical
+		characterization of trabecular bone. August 16, 2023 to August 16, 2025.
+
+
+     \item Hızal, H., Nuhoglu, A., Ercan E., Pekedis M., Avci MS Modal Parameter Determination
+     Based on Probabilistic Distribution of Frequency Response Function.  Council of 
+     	Higher Education -- Ege University Office of Scientific Research Projects,
+     	February 27, 2024 to February 27, 2025.	
+
+
+     \item Sarikanat M., İşbilir A., Gürses B.O, Uzunbayır B., Tümer D., Yildiz H., 
+     	Yilmazkarasu H., Çetin L., Altay L., Pekedis M., Şener M., Boztepe M., 
+     	Kaya T.Z, Seki Y. Development of Piezoelectric Polymeric Metamaterials for Space
+     	and Satellite Technologies using Additive Manufacturing Technologies. Council of 
+     	Higher Education -- Ege University Office of Scientific Research Projects,
+     	February 1, 2023 to February 1, 2026.	
+				
+     																
+	\item Ercan E.,  Nuhoğlu A., Arisoy B., Arisoy B.,  Hizal Ç., Pekedis  M., Avci M.S.
+		Experimental and Numerical Evaluation of the Performance of Steel Composite Elements
+		Embedded in Fired Concretes Subjected to Combined Flexural Loads. 
+		Ege University Office of Scientific Research Projects, February 1, 2023 to February 1, 2024.		
+		
+	\item Yüce M.Ö, Koyuncu B.Ö., Tümer D., Gökçe F.M, Pekedis M.
+		The Influences of Roots Left in the Mandible After Coronectomy on Mandible Fragility.
+		Ege University Office of Scientific Research Projects, June 33, 2022 to June 24, 2024.
+	
+	\item Ozkol M.Z, Yildiz H., Biçer M.E.K, Pekedis M. Design, Manufacture and Anaerobic Performance 
+		Testing of an Adjustable Q-Factor Cycling Prototype. The Scientific and Technological
+		Research Council of Turkey (TUBITAK 1001), August 1, 2022 to August 1, 2024.
+		
+	\item  Yildiz H., Pekedis M., Pekbey Y., Unal H.Y. Improvement of Mechanical Properties
+		of Composite Plates via Optimized Nanoclay Additions. Ege University Office 
+		of Scientific Research Projects, June 29, 2017 to January 1, 2021.
+		
+	\item Pekedis M., Sayer S., Yildiz H. Development of a Human-Machine Haptics Interface 
+		for Product Life-Cycle Management (PLM) Applications. Ege University Office of Scientific 
+		Research Projects, June 29, 2017 to December 3, 2020.
+							
+	\item Yildiz H., Sayer S., Pekedis M.,Turan M., Unal H.Y, Gurses B.O. Optimization of a
+		Laptop Chassis using Inverse Techniques for the Product Life-Cycle Management (PLM) Applications.
+		Ege University Office of Scientific Research Projects. June 7, 2016 to January 1, 2019.
+		
+
+	\item	Guner M., Yildiz H., Pekedis M. Devolopment of a Smart Corset for Non-Ideal
+		Sitting posture defects. The Scientific and Technological Research Council of Turkey (TUBITAK 1005), 
+		January 15, 2018 to July 14, 2019.
+		
+ 	\item Turan M., Ünal H.Y, Yildiz H., Pekedis M.,Sayer S. Improvement of Services in a Department
+ 		within the University: PLM Implementation. Ege University Office of Scientific Research Projects,
+ 		 February 27, 2018 to August 27, 2022.
+ 		 
+	\item Yildiz H., Pekedis M. Modeling of the Delamination in Composite structures
+		with Piezoelectric Materials. Ege University Office of Scientific Research Projects, 
+		June 4, 2012 to June 18, 2015.
+		
+	\item Pekedis M, Yildiz H. A Human-machine Interface for Localizing Ultrasonic Scatterers
+		for structural health monitoring. Ege University Office of Scientific Research Projects, 
+		October 10, 2012 to December 12, 2013.
+	
+	\item Sarikanat M, Yildiz H., Baltaci A., Pekedis M, Erden S. Production, Improvement and
+		Characterization of Natural Fiber Reinforced Polymer Composites. Ege University
+		Office of Scientific Research Projects, April 20, 2009 to February, 2012.
+
+
+
+\end{bibenum}
+
+%\blankline
+%
+%\textbf{Not Awarded}
+%
+%\begin{bibenum}
+%
+%    \item Senior staff, ``Informational architecture of collective
+%        decision making by \emph{Temnothorax} ants'', NSF, POLS, 2013.
+%        Not awarded.
+%
+%    \item Senior staff,
+%        ``Biological stoichiometry of horizontal gene transfer and the
+%        social dynamics of microbial communities'', Army Research
+%        Office, 2013. Not awarded.
+%
+%    \item Senior staff,
+%        ``Biologically-inspired strategies for collective transport and
+%        construction by multi-robot systems'', NSF, RI, 2013. Not
+%        awarded.
+%
+%    \item Co\-/PI,
+%        ``An Ant Model System for the Study of Nutrient Balance in
+%        Social\-/Insect Pollinators'', USDA,
+%        NIFA\-/AFRI Foundational proposal, 2013. Not awarded.
+%
+%    \item Senior staff,
+%        ``Cooperative LED Arrays for Preference\-/Adaptive Lighting in
+%        Smart Buildings'',
+%        NSF,
+%        EFRI\-/SEED preliminary proposal, 2009. Not awarded.
+%
+%\end{bibenum}
+
+%\section{Academic Service}
+%
+%\textbf{Arizona State University, Tempe, AZ}
+%\begin{lonelist}
+%
+%    \item College of Liberal Arts and Sciences Research Operations Committee,
+%        \emph{Center for Social Dynamics and Complexity Representative},
+%        2016--present.
+%
+%    \item Biosocial Complexity Initiative Directorate,
+%        \emph{Liaison for Cross-University Activities},
+%        2016--present.
+%
+%    \item Engineering Management Undergraduate Program Committee,
+%        \emph{Member},
+%        2015--present.
+%
+%    \item The Biomimicry Center,
+%        \emph{Associate Director of Research},
+%        2015--present.
+%
+%    \item Committee for the Development of Biomimicry and
+%        Bio\-/inspired Research and Education Initiatives at ASU,
+%        \emph{Chairman}.
+%        2013.
+%
+%    \item Interdisciplinary Complexity Science Student Organization,
+%        \emph{Founding faculty co\-/adviser}.
+%        2013.
+%
+%\end{lonelist}
+
+\section{Advising and Mentoring}
+
+\textbf{Graduate Students}
+
+\begin{outerlist}
+%    \item \textbf{Brian Vincent}, PhD Student, Computer Science, 2017--\\
+    \item \textbf{Mehmet Arda Özden}, PhD Student, Mechanical Engineering, 2020--
+    \item \textbf{Güner Boyaci}, MS Student, Mechanical Engineerings, 2019--
+    \item \textbf{Ali Düdük}, MS Student, Mechanical Engineering, 2018--
+    \item \textbf{Mert Narin}, MS Student, Mechanical Engineering, 2020--
+    \item \textbf{Tolga Aydin}, MS Student, Mechanical Engineering, 2021--     
+    \item \textbf{Tuğba Kapan}, MS Student, Biomedical Technologies, 2020--
+    \item \textbf{Schrin Schironova Sadriddin}, MS Student, Mechanical Engineering, 2021--          
+    \item \textbf{Mert Mutlu Yilmaz}, MS Student, Mechanical Engineering, 2020--
+    \item \textbf{Seda Hasanoğlu}, MS Student, Mechanical Engineering, 2020-- 
+ 
+    \item \textbf{Saran Sapmaz}, MS Student, Mechatronics Engineering. \\
+    	Thesis topic: Computer vision and sensor based autonomous mobile robot for 
+    	simultaneous localization and mapping. 2020--2023 (graduated, MS) 	
+   
+    \item \textbf{Mehmet Arda Ozden}, MS Student, Mechanical Engineering. \\
+    	Thesis topic: A human-machine auditory interface for structural
+    	health monitoring 2018--2021 (graduated, MS)   	
+    	
+    \item \textbf{Emrah Ayran}, MS Student, Mechanical Engineering. \\
+    	Thesis topic: Validation of experimental impact tests on aluminum alloy car
+    	wheels using the finite element method. 2016--2019 (graduated, MS)
+    	
+    \item \textbf{Isin Naz Budak}, MS Student, Mechanical Engineering. \\
+    	Thesis topic: Experimental and numerical fatigue behavior analysis of
+    	a plastically deformed passenger car tie rod. 2016--2019 (graduated, MS)
+
+\end{outerlist}
+
+\vspace{0.1in}
+\section{Teaching Experience}
+
+\href{http://www.ege.edu.tr}{\textbf{Ege University}}, Izmir, Turkey
+\begin{outerlist}
+
+\item[] \textit{Instructor} \hfill \textbf{Fall 2015 to present}
+    \begin{innerlist}
+        \item Statics
+        \item Dynamics
+        \item Mechanics of Materials
+        \item Computational Mechanics
+        \item Elasticity Theory (Graduate-level course)
+    \end{innerlist}
+
+
+
+\item[] \textit{Instructor} \hfill \textbf{Fall 2019 to present}
+    \begin{innerlist}
+        \item Virtual product development principles (Graduate-level course)
+    \end{innerlist}
+
+\end{outerlist}
+
+\section{Professional Service}
+
+\textbf{Referee Service}
+\begin{innerlist}
+    \item \emph{Inverse Problems in Science & Engineering}
+    \item \emph{Mechanical Systems and Signal Processing}
+    \item \emph{Smart Materials and Structures}
+    \item \emph{Prosthetics & Orthotics International}
+    \item \emph{Computers in Biology and Medicine}
+    \item \emph{Annals of Biomedical Engineering}
+    \item \emph{Computer Methods in Biomechanics and Biomedical Engineering}
+    \item \emph{Proceedings of the Institution of Mechanical Engineers, 
+    	Part H: Journal of Engineering in Medicine}
+    \item \emph{Journal of Tissue Engineering and Regenerative Medicine}
+    \item \emph{Textile and Apparel}
+    \item \emph{Frontiers in Psychiatry}
+    \item \emph{Histology and Histopathology}
+    \item \emph{Uludag University Journal of the Faculty of Engineering}
+    \item \emph{Journal of Interdisciplinary Innovation Studies}
+    \item \emph{Turkish journal of engineering & environmental sciences}
+    \item \emph{Sigma Journal of Engineering and Natural Sciences}
+    \item \emph{Acta Orthopaedica et Traumatologica Turcica}
+    \item \emph{Nature Scientefic Reports}
+    \item \emph{Frontiers in Surgery}
+ 
+\end{innerlist}
+
+\section{Professional Experience}
+
+\href{http://www.ege.edu.tr}{\textbf{Ege University, Izmir, Turkey}}
+
+
+    \item[] \textit{Associate Professor}%
+            \hfill \textbf{August 2022}
+                \item Joint Appointment:
+                    \begin{innerlist}
+                        \item \href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of Mechanical Engineering}}
+                        \item \href{https://egeplm.ege.edu.tr/eng-/Homepage.html}{Product Lifecycle Management
+                        Research and Application Excellence Center}
+                      \end{innerlist}
+        
+        
+    \item[] \textit{Assistant Professor}%
+            \hfill \textbf{April 2015 to August 2022}\\
+            \href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of Mechanical Engineering}
+           \begin{innerlist}
+           \item Devoloped a model based structural health monitoring
+           		technique to detect the damage in composite materials
+           
+           \item Implemented data based structural health monitoring approaches
+           	to detect nonlinearities in engineering systems
+           
+			\item Initiated a project for exploring the 
+				use of ultrasonic-wave propagation measurements coupled 
+				with non-invasive, vibro-tactors to develop a structural 
+				health monitoring-human machine interface. 
+
+			\item Performed a research to develop, test and validate
+				a meshless smoothed particle hydrodynamic framework for the
+				analysis of hard tissue failure.
+
+			\item completed a research with orthopaedicians to investigate the 
+				biomechanics of the femoral head cartilage and subchondral trabecular bone in
+				osteoporotic and osteopenic fractures
+
+            \item Chosen to deliver lecturers and prepare course 
+                materials for undergraduate courses such as Elasticity theory,
+                Mechanics of materials and Statics 
+            
+             \item Supervision of graduate and undergraduate students
+                in mechanical, biomedical and mechatronics engineering.
+            \end{innerlist}
+
+ \item[] \textit{Research/Teaching Assistant}%
+            \hfill \textbf{September 2009 to July 2012}\\
+            \href{https://me.ege.edu.tr/eng-/Homepage.html}{Department of Mechanical Engineering}
+         \item Supervisor: \href{https://unisis.ege.edu.tr/researcher=hasan.yildiz}{Professor Hasan Yildiz}                       
+           \begin{innerlist}
+                 
+		\item Developed an algorithm based on modal shapes
+			for detecting and repairing the crack damage in laminated
+			composite beams.
+		\item Support vector machines (SVM) a machine learning algorithm
+		 has been applied to detect the presence of damage in a tower structure.
+		\item Submitted the results of MS dissertation to scientific journals.
+		\item Assisted some undergraduate courses such as the finite element method,
+		mechanics of composite materials, strength of materials and statics.
+            
+ 		\end{innerlist}
+ 		
+  \halfblankline
+ 		
+   \href{https://www.lanl.gov}{\textbf{Los Alamos National Laboratory, NM, USA}}
+    \item[] \textit{PhD Research Scholar} \hfill \textbf{June 2012 to August 2013}\\
+    \href{https://www.lanl.gov/projects/national-security-education-center/engineering/}{Engineering
+    Institute}
+
+    \item Supervisor: Dr. Charles Farrar and Dr. David Mascarenas
+    
+        \begin{innerlist}
+                 
+		\item Developed a novel human-machine cooperative paradigm
+			for structural health monitoring applications. 
+		\item The paradigm includes multidisciplinary fields such as human nervous system, 
+			structural health monitoring (SHM) sensor networks, IoT networks, 
+			signal processing techniques,  feature extractions methods, cyber-physical systems,
+			 multivariate statistical methods, psychophysics procedures and h
+			 aptics technology to create harmonies among human and machine.  
+            
+ 		\end{innerlist}
+
+  \halfblankline
+ 		
+   \href{https://www.stfa.com/en/}{\textbf{STFA, Itanbul, Turkey}}
+    \item[] \textit{Maintenance Engineer} \hfill \textbf{December 2007 to August 2008}
+        \begin{innerlist}
+                 
+		\item Devoloped computer based fault diagnosis
+			tools to determine the damages in construction equipments.
+ 		\end{innerlist}
+
+
+
+
+\end{outerlist}
+
+\section{Professional Memberships}
+
+\href {https://esbiomech.org}{European Society of Biomechanics}, Member, 2017--present
+
+\section{Other Meeting Attendance}
+
+\textbf{Participant}
+
+    \item Raising Awareness on Product Lifecycle Management via Education and 
+    Industrial Strategic Collaboration within Europe, July 11 – July 15, 2016, Kaiserslautern, Germany.
+    
+
+\section{Service}
+
+\href{https://me.ege.edu.tr/eng-/Homepage.html}{Ege University, 
+Department of Mechanical Engineering}
+
+	 \textit{Vice Chair}, \hfill \textbf{2021 to 2022}
+
+
+
+\section{Application Areas}
+
+Autonomous and Unmanned Vehicles, Mechanical Systems, Engineering Structures,
+Flexible Manufacturing Systems, Biomedical Technologies
+
+\section{Hardware and Software Skills}
+
+Computer\-/Aided Design Tools:
+%
+\begin{innerlist}
+    \item AutoCad, SolidWorks, Shapr3D, SpaceClaim, FreeCAD
+\end{innerlist}
+
+\halfblankline
+
+Computer\-/Aided Engineering Tools:
+%
+\begin{innerlist}
+    \item Abaqus/Implicit, Abaqus/Explicit, HyperWorks, HyperMesh, Ansys, CalculiX
+\end{innerlist}
+
+\halfblankline
+
+Embedded and Real\-/time Systems:
+%
+\begin{innerlist}
+    \item Software and hardware development with several MCU (e.g.,  Atmel
+        ATmega MCU's, STM MCU's and others)
+\end{innerlist}
+
+\halfblankline
+
+Instrumentation, Control, Data Acquisition, Test, and Measurement:
+%
+\begin{innerlist}
+    \item \href{http://www.ni.com/}{LabVIEW} and other
+        \href{http://www.ni.com}{National Instruments}
+        control and data acquisition hardware and software (PicoScope, 
+        Hewlett\-/Packard, Agilent, PI (Physik Instrumente), Keysight, 
+        Tektronix equipments)
+\end{innerlist}
+
+\halfblankline
+
+Computer Programming:
+%
+\begin{innerlist}
+    \item C, Python, Fortran, Visual Basic (.NET) and others
+\end{innerlist}
+
+\halfblankline
+
+Numerical Analysis:
+%
+\begin{innerlist}
+    \item \Matlab, \Python~Scipy--NumPy
+\end{innerlist}
+
+\halfblankline
+
+
+
+\href{http://www.mathworks.com/products/matlab/}{\Matlab} skill set:
+%
+\begin{innerlist}
+    \item Linear algebra, symbolic math, Fourier transforms, Monte Carlo analysis,
+        nonlinear numerical methods, polynomials, signal processing, visualization, machine learning
+
+    \item Toolboxes: communications, control system, filter design, 
+    statistics and machine learning, symbolic, econometrics
+\end{innerlist}
+
+\href{https://www.python.org}{\Python} skill set:
+%
+\begin{innerlist}
+    \item Linear algebra, Symbolic math, Fourier transforms, Bayesian optimization, 
+    Classification, Sensitivity Analysis, Nonlinear numerical methods, Signal processing, Machine learning,
+     Visualization
+
+    \item Modules: PyQt5, Qtgraph, Scipy, SymPy, NumPy,  Tensorflow, PyTorch, BoTorch,
+    Scikit-optimize, Statsmodels, Seaborn, Arviz, Pandas and others
+\end{innerlist}
+
+
+\halfblankline
+
+Information/Internet Technology:
+%
+\begin{innerlist}
+    \item Networking (UDP, TCP), Data application
+     and dashboard (Streamlit), Web framework (FastAPI)
+\end{innerlist}
+
+\halfblankline
+
+Desktop Editing and Productivity Software:
+%
+\begin{innerlist}
+    \item Eclipse, Jupyter, Spyder, PyCharm
+    \item \TeX{} (\LaTeX{}),
+    \item Microsoft Office, OpenOffice.org, LibreOffice, 
+    \item InkScape
+\end{innerlist}
+
+\halfblankline
+
+Operating Systems:
+%
+\begin{innerlist}
+    \item Microsoft Windows family, Mac OS X, Ubuntu and other Linux variants
+\end{innerlist}
+
+
+\section{Awards}
+
+\href{https://www.yok.gov.tr/en}{Council of Higher Education}
+
+\begin{innerlist}
+ \item Graduate Research Fellowship, 2012--2013
+\end{innerlist}
+
+\href{https://www.ege.edu.tr}{Ege University}
+\begin{innerlist}
+ \item Research Fellowship, 2012--2014
+\end{innerlist}
+
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
+
+
